@@ -2,7 +2,7 @@ console.log("✅ widget.js loaded");
 
 // 🔹 CONFIG — must be at TOP
 const BUSINESS_ID = "demo-business";
-const API_URL = "https://ai-support-backend-6pc9.onrender.com/";
+const API_URL = "https://ai-support-backend-6pc9.onrender.com/chat";
 
 // 🔹 DOM elements
 const sendBtn = document.getElementById("sendBtn");
