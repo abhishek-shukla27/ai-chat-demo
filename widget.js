@@ -21,31 +21,39 @@ function addMessage(text, sender) {
 
 // 🔹 Send message to backend
 async function sendMessage() {
-  console.log("👉 Send button clicked");
-
-  const message = input.value;
+  const input = document.getElementById("messageInput");
+  const message = input.value.trim();
   if (!message) return;
 
   addMessage(message, "user");
   input.value = "";
 
   try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        business_id: BUSINESS_ID,
-        question: message
-      })
-    });
+    const response = await fetch(
+      "https://ai-support-backend-6pc9.onrender.com/chat",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          business_id: "Sync IO",
+          question: message
+        })
+      }
+    );
 
     const data = await response.json();
-    console.log("✅ API response:", data);
+    console.log("API RESPONSE:", data);
 
-    addMessage(data.answer || "No reply", "bot");
+    if (data.answer) {
+      addMessage(data.answer, "bot");
+    } else {
+      addMessage("No reply from server", "bot");
+    }
 
   } catch (error) {
-    console.error("❌ Fetch failed:", error);
+    console.error("Fetch error:", error);
     addMessage("Error connecting to server", "bot");
   }
 }
